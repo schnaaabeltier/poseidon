@@ -5,14 +5,15 @@ set(CMAKE_CXX_STANDARD 20)
 set(library_name Poseidon)
 set(${library_name}_version 1.0)
 
-add_subdirectory(libs/glfw)
+set(glfw_DIR libs/glfw)
+find_package(glfw3 REQUIRED)
 
 add_subdirectory(src)
 
 set(install_targets
-        ${library_name}_core
+        core
         )
-set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
+
 install(TARGETS
             ${install_targets}
         EXPORT
@@ -38,6 +39,6 @@ write_basic_package_version_file("${library_name}Version.cmake"
 install(FILES "${library_name}Config.cmake"
         DESTINATION lib/cmake/${library_name})
 
-install(DIRECTORY include
+install(DIRECTORY include/${project_name}
         DESTINATION include)
 

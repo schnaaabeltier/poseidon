@@ -1,5 +1,5 @@
-#include "poseidon/core/Application.h"
-#include "poseidon/core/Entrypoint.h"
+#include "Poseidon/core/Application.h"
+#include "Poseidon/core/Entrypoint.h"
 
 #include <memory>
 

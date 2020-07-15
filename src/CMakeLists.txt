@@ -1,4 +1,4 @@
-set(target ${library_name}_core)
+set(target core)
 
 set(sources
         core/Application.cpp
