@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(library_name Poseidon)
 set(${library_name}_version 1.0)
 
+add_subdirectory(libs/glfw)
+
 add_subdirectory(src)
 
 set(install_targets
