@@ -5,8 +5,11 @@ set(CMAKE_CXX_STANDARD 20)
 set(library_name Poseidon)
 set(${library_name}_version 1.0)
 
-set(glfw_DIR libs/glfw)
 find_package(glfw3 REQUIRED)
+find_package(spdlog REQUIRED)
+
+set(include_dir include)
+file(GLOB_RECURSE ${headers} include/)
 
 add_subdirectory(src)
 

@@ -3,6 +3,8 @@
 namespace poseidon {
     class Application {
     public:
+        void start();
+
         virtual void run() = 0;
     };
 
