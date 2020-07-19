@@ -3,7 +3,6 @@
 #include <memory>
 #include <string>
 
-#define SPDLOG_TRACE_ON
 #include <spdlog/spdlog.h>
 
 namespace poseidon {
@@ -32,3 +31,8 @@ namespace poseidon {
 #define PS_CORE_DEBUG(...) poseidon::Logger::getCoreLogger()->debug(__VA_ARGS__)
 #define PS_CORE_WARN(...) poseidon::Logger::getCoreLogger()->warn(__VA_ARGS__)
 #define PS_CORE_ERROR(...) poseidon::Logger::getCoreLogger()->error(__VA_ARGS__)
+
+#define PS_APP_INFO(...) poseidon::Logger::getClientLogger()->info(__VA_ARGS__)
+#define PS_APP_DEBUG(...) poseidon::Logger::getClientLogger()->debug(__VA_ARGS__)
+#define PS_APP_WARN(...) poseidon::Logger::getClientLogger()->warn(__VA_ARGS__)
+#define PS_APP_ERROR(...) poseidon::Logger::getClientLogger()->error(__VA_ARGS__)

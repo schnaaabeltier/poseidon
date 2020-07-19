@@ -5,6 +5,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(library_name Poseidon)
 set(${library_name}_version 1.0)
 
+include(cmake/CompileOptions.cmake)
+
+find_package(glbinding REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(spdlog REQUIRED)
 

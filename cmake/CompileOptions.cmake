@@ -1,0 +1,1 @@
+set(default_compile_options "-Wall")

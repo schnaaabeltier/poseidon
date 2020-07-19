@@ -6,7 +6,7 @@ std::shared_ptr<spdlog::logger> poseidon::Logger::m_clientLogger = nullptr;
 std::shared_ptr<spdlog::logger> poseidon::Logger::m_coreLogger = nullptr;
 
 void poseidon::Logger::initialize() {
-    spdlog::set_pattern("%^[%T][%-6l] %n - %s : %v%$");
+    spdlog::set_pattern("%^[%T][%-6l] %n : %v%$");
     m_coreLogger = spdlog::stdout_color_mt("Core");
     m_clientLogger = spdlog::stdout_color_mt("App");
 }
