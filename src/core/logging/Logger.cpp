@@ -1,22 +1,28 @@
 #include "Poseidon/core/logging/Logger.h"
 
+#include <spdlog/sinks/stdout_color_sinks.h>
+
+std::shared_ptr<spdlog::logger> poseidon::Logger::m_clientLogger = nullptr;
+std::shared_ptr<spdlog::logger> poseidon::Logger::m_coreLogger = nullptr;
+
 void poseidon::Logger::initialize() {
-    setClientLogger(createClientLogger());
-    setCoreLogger(createCoreLogger());
+    spdlog::set_pattern("%^[%T][%-6l] %n - %s : %v%$");
+    m_coreLogger = spdlog::stdout_color_mt("Core");
+    m_clientLogger = spdlog::stdout_color_mt("App");
 }
 
-void poseidon::Logger::setClientLogger(Logger *logger) {
-    m_clientLogger = std::unique_ptr<Logger>(logger);
+void poseidon::Logger::setClientLogger(std::shared_ptr<spdlog::logger> logger) {
+    m_clientLogger = std::move(logger);
 }
 
-void poseidon::Logger::setCoreLogger(Logger *logger) {
-    m_coreLogger = std::unique_ptr<Logger>(logger);
+void poseidon::Logger::setCoreLogger(std::shared_ptr<spdlog::logger> logger) {
+    m_coreLogger = std::move(logger);
 }
 
-const poseidon::Logger& poseidon::Logger::getClientLogger() {
-    return *m_clientLogger;
+std::shared_ptr<spdlog::logger> poseidon::Logger::getClientLogger() {
+    return m_clientLogger;
 }
 
-const poseidon::Logger& poseidon::Logger::getCoreLogger() {
-    return *m_coreLogger;
+std::shared_ptr<spdlog::logger> poseidon::Logger::getCoreLogger() {
+    return m_coreLogger;
 }

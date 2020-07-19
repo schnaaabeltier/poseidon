@@ -4,4 +4,3 @@
 #include "core/Entrypoint.h"
 
 #include "core/logging/Logger.h"
-#include "core/logging/SpdConsoleLogger.h"

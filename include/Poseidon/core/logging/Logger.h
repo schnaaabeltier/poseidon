@@ -3,38 +3,32 @@
 #include <memory>
 #include <string>
 
-namespace poseidon {
-    enum LogChannel {
-        INFO,
-        DEBUG,
-        WARNING,
-        ERROR
-    };
+#define SPDLOG_TRACE_ON
+#include <spdlog/spdlog.h>
 
+namespace poseidon {
     class Logger {
     public:
         virtual ~Logger() = default;
 
-        virtual void info(const std::string &message) = 0;
-        virtual void debug(const std::string &message) = 0;
-        virtual void warning(const std::string &message) = 0;
-        virtual void error(const std::string &message) = 0;
-
         static void initialize();
 
-        static void setClientLogger(Logger *logger);
-        static void setCoreLogger(Logger *logger);
+        static void setClientLogger(std::shared_ptr<spdlog::logger> logger);
+        static void setCoreLogger(std::shared_ptr<spdlog::logger> logger);
 
-        static const Logger &getClientLogger();
-        static const Logger &getCoreLogger();
+        static std::shared_ptr<spdlog::logger> getClientLogger();
+        static std::shared_ptr<spdlog::logger> getCoreLogger();
 
     private:
-        static std::unique_ptr<Logger> m_coreLogger;
-        static std::unique_ptr<Logger> m_clientLogger;
+        static std::shared_ptr<spdlog::logger> m_coreLogger;
+        static std::shared_ptr<spdlog::logger> m_clientLogger;
     };
 
-    extern Logger *createClientLogger();
-    extern Logger *createCoreLogger();
+    extern std::shared_ptr<spdlog::logger> createClientLogger();
+    extern std::shared_ptr<spdlog::logger> createCoreLogger();
 }
 
-#define PS_CORE_INFO(...) poseidon::Logger::getClientLogger()->info(__VA_ARGS__)
+#define PS_CORE_INFO(...) poseidon::Logger::getCoreLogger()->info(__VA_ARGS__)
+#define PS_CORE_DEBUG(...) poseidon::Logger::getCoreLogger()->debug(__VA_ARGS__)
+#define PS_CORE_WARN(...) poseidon::Logger::getCoreLogger()->warn(__VA_ARGS__)
+#define PS_CORE_ERROR(...) poseidon::Logger::getCoreLogger()->error(__VA_ARGS__)

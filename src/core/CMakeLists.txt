@@ -6,8 +6,7 @@ set(sources
         Application.cpp
         Entrypoint.cpp
 
-        logging/Logger.cpp
-        logging/SpdConsoleLogger.cpp)
+        logging/Logger.cpp)
 
 
 add_library(${target} ${sources})
