@@ -2,7 +2,8 @@
 
 #include <utility>
 
-poseidon::Window::Window(uint32_t width, uint32_t height, std::string title) : m_width(width), m_height(height), m_title(std::move(title)) {
+poseidon::Window::Window(uint32_t width, uint32_t height, std::string title, EventDispatcher* eventDispatcher)
+    : m_width(width), m_height(height), m_title(std::move(title)), m_eventDispatcher(eventDispatcher) {
 
 }
 
@@ -28,6 +29,14 @@ const std::string &poseidon::Window::getTitle() const {
 
 void poseidon::Window::setTitle(const std::string &title) {
     m_title = title;
+}
+
+bool poseidon::Window::isVisible() const {
+    return m_visible;
+}
+
+void poseidon::Window::setVisible(bool visible) {
+    m_visible = visible;
 }
 
 std::pair<uint32_t, uint32_t> poseidon::Window::getSize() const {

@@ -12,7 +12,7 @@ find_package(glfw3 REQUIRED)
 find_package(spdlog REQUIRED)
 
 set(include_dir include)
-file(GLOB_RECURSE ${headers} include/)
+file(GLOB_RECURSE headers ${include_dir}/*.h)
 
 add_subdirectory(src)
 

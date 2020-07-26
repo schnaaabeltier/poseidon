@@ -7,11 +7,17 @@ set(sources
         application/Entrypoint.cpp
         application/Layer.cpp
 
+        events/Event.cpp
+        events/EventDispatcher.cpp
+        events/EventHandler.cpp
+        events/EventQueue.cpp
+        events/KeyEvent.cpp
+        events/MouseEvent.cpp
+
         logging/Logger.cpp
 
         window/PoseidonGlfwWindow.cpp
-        window/Window.cpp
-        )
+        window/Window.cpp)
 
 
 add_library(${target} ${sources})

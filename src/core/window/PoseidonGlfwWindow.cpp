@@ -1,9 +1,11 @@
+#include "Poseidon/core/events/KeyEvent.h"
 #include "Poseidon/core/logging/Logger.h"
 #include "Poseidon/core/window/PoseidonGlfwWindow.h"
 
 #include <glbinding/glbinding.h>
 
-poseidon::PoseidonGlfwWindow::PoseidonGlfwWindow(uint32_t width, uint32_t height, std::string title) : Window(width, height, std::move(title)) {
+poseidon::PoseidonGlfwWindow::PoseidonGlfwWindow(uint32_t width, uint32_t height, std::string title, EventDispatcher* dispatcher)
+    : Window(width, height, std::move(title), dispatcher) {
     initializeWindow();
 }
 
@@ -25,6 +27,12 @@ void poseidon::PoseidonGlfwWindow::initializeWindow() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwSetWindowUserPointer(m_window, this);
+
+    glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scanCode, int action, int mods) {
+        auto appWindow = static_cast<PoseidonGlfwWindow*>(glfwGetWindowUserPointer(window));
+        appWindow->keyCallback(window, key, scanCode, action, mods);
+    });
 
     glfwMakeContextCurrent(m_window);
     glbinding::initialize(glfwGetProcAddress);
@@ -37,6 +45,28 @@ void poseidon::PoseidonGlfwWindow::onError(int error, const char *description) {
 }
 
 void poseidon::PoseidonGlfwWindow::onUpdate(std::chrono::milliseconds timeDelta) {
+    setVisible(!glfwWindowShouldClose(m_window));
     glfwPollEvents();
     glfwSwapBuffers(m_window);
+}
+
+void poseidon::PoseidonGlfwWindow::keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+    auto eventData = KeyEventData {
+        .key = key,
+        .scanCode = scancode,
+        .action = convertAction(action)
+    };
+
+    auto event = std::make_unique<KeyEvent>(eventData);
+    m_eventDispatcher->dispatchEvent(std::move(event));
+}
+
+poseidon::KeyAction poseidon::PoseidonGlfwWindow::convertAction(int glfwAction) {
+    if (glfwAction == GLFW_PRESS)
+        return KeyAction::Press;
+
+    if (glfwAction == GLFW_RELEASE)
+        return KeyAction::Release;
+
+    return KeyAction::Repeat;
 }
