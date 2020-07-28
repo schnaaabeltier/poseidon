@@ -11,6 +11,7 @@ namespace poseidon {
          ~PoseidonGlfwWindow() noexcept override;
 
          void onUpdate(std::chrono::milliseconds timeDelta) override;
+         [[nodiscard]] std::any getNativeHandle() const override;
 
          void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 

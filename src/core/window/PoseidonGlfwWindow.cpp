@@ -70,3 +70,7 @@ poseidon::KeyAction poseidon::PoseidonGlfwWindow::convertAction(int glfwAction) 
 
     return KeyAction::Repeat;
 }
+
+std::any poseidon::PoseidonGlfwWindow::getNativeHandle() const {
+    return m_window;
+}

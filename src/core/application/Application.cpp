@@ -1,9 +1,13 @@
 #include "Poseidon/core/application/Application.h"
 #include "Poseidon/core/logging/Logger.h"
 #include "Poseidon/core/window/PoseidonGlfwWindow.h"
+#include "Poseidon/gui/ImGuiLayer.h"
 
-poseidon::Application::Application(uint32_t windowWidth, uint32_t windowHeight, std::string windowTitle) {
+poseidon::Application::Application(uint32_t windowWidth, uint32_t windowHeight, std::string windowTitle, const std::string& assetsBasePath) {
+    m_assetsBasePath = std::filesystem::path(assetsBasePath);
     m_window = std::make_unique<PoseidonGlfwWindow>(windowWidth, windowHeight, std::move(windowTitle), &m_eventDispatcher);
+    auto imguiLayer = new poseidon::ImGuiLayer();
+    addLayer(imguiLayer);
 }
 
 void poseidon::Application::start() {
@@ -31,6 +35,7 @@ void poseidon::Application::start() {
 
 void poseidon::Application::addLayer(Layer *layer) {
     m_layers.push_back(std::unique_ptr<Layer>(layer));
+    layer->onAttach(*this);
 }
 
 void poseidon::Application::handleEvent(poseidon::Event* event) {
@@ -40,4 +45,12 @@ void poseidon::Application::handleEvent(poseidon::Event* event) {
 
 void poseidon::Application::handleKeyEvent(poseidon::KeyEvent* event) {
     PS_CORE_INFO("Key event: {}", event->getData<KeyEventData>().key);
+}
+
+const poseidon::Window& poseidon::Application::getWindow() const {
+    return *m_window;
+}
+
+std::filesystem::path poseidon::Application::getAssetsBasePath() const {
+    return m_assetsBasePath;
 }

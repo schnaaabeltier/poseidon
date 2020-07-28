@@ -16,6 +16,8 @@ namespace poseidon {
 
         virtual void onUpdate(std::chrono::milliseconds timeDelta) = 0;
 
+        virtual std::any getNativeHandle() const = 0;
+
         [[nodiscard]] std::pair<uint32_t, uint32_t> getSize() const;
 
         [[nodiscard]] uint32_t getWidth() const;

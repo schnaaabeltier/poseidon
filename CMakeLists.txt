@@ -10,6 +10,7 @@ include(cmake/CompileOptions.cmake)
 find_package(glbinding REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(spdlog REQUIRED)
+find_package(imgui REQUIRED)
 
 set(include_dir include)
 file(GLOB_RECURSE headers ${include_dir}/*.h)
@@ -18,6 +19,7 @@ add_subdirectory(src)
 
 set(install_targets
         core
+        gui
         )
 
 install(TARGETS
@@ -47,4 +49,7 @@ install(FILES "${library_name}Config.cmake"
 
 install(DIRECTORY include/${project_name}
         DESTINATION include)
+
+install(DIRECTORY assets/
+        DESTINATION assets)
 
