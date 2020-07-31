@@ -11,7 +11,7 @@ poseidon::Application::Application(uint32_t windowWidth, uint32_t windowHeight, 
 }
 
 void poseidon::Application::start() {
-    m_eventDispatcher.addEventHandler(this);
+    m_eventDispatcher.addEventHandler<KeyEvent>(this);
     run();
 }
 
@@ -38,13 +38,8 @@ void poseidon::Application::addLayer(Layer *layer) {
     layer->onAttach(*this);
 }
 
-void poseidon::Application::handleEvent(poseidon::Event* event) {
-    if (event->getType() == "key_event")
-        handleKeyEvent(dynamic_cast<KeyEvent*>(event));
-}
+void poseidon::Application::handleEvent(const KeyEvent &event) {
 
-void poseidon::Application::handleKeyEvent(poseidon::KeyEvent* event) {
-    PS_CORE_INFO("Key event: {}", event->getData<KeyEventData>().key);
 }
 
 const poseidon::Window& poseidon::Application::getWindow() const {
@@ -53,4 +48,8 @@ const poseidon::Window& poseidon::Application::getWindow() const {
 
 std::filesystem::path poseidon::Application::getAssetsBasePath() const {
     return m_assetsBasePath;
+}
+
+poseidon::EventDispatcher& poseidon::Application::getEventDispatcher() {
+    return m_eventDispatcher;
 }

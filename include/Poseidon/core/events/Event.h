@@ -3,26 +3,29 @@
 #include "Poseidon/core/events/EventHandler.h"
 
 #include <any>
+#include <concepts>
 #include <string>
 
 namespace poseidon {
     class Event {
     public:
-        Event(std::string type, std::any data);
+        explicit Event(std::any data);
         virtual ~Event() = default;
 
-        template<typename T>
-        const T& getData() const {
-            return std::any_cast<T>(getGenericData());
-        };
+        virtual void dispatch(EventHandler* handler) = 0;
 
-        [[nodiscard]] const std::string &getType() const;
+        template<typename T>
+        T getData() const {
+            return std::any_cast<T>(m_data);
+        };
 
     protected:
         [[nodiscard]] const std::any& getGenericData() const;
 
     private:
-        std::string m_type;
         std::any m_data;
     };
+
+    template <typename T>
+    concept IsEvent = std::is_base_of<Event, T>::value;
 }

@@ -11,8 +11,9 @@ set(sources
         events/EventDispatcher.cpp
         events/EventHandler.cpp
         events/EventQueue.cpp
-        events/KeyEvent.cpp
-        events/MouseEvent.cpp
+        events/KeyEvents.cpp
+        events/MouseEvents.cpp
+        events/WindowEvents.cpp
 
         logging/Logger.cpp
 

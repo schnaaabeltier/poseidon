@@ -11,7 +11,7 @@ namespace poseidon {
         explicit Layer(std::string name);
         virtual ~Layer() = default;
 
-        virtual void onAttach(const Application& app) = 0;
+        virtual void onAttach(Application& app) = 0;
         virtual void onUpdate(std::chrono::milliseconds timeDelta) = 0;
         virtual void onDetach() = 0;
 

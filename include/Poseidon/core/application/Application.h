@@ -3,7 +3,7 @@
 #include "Poseidon/core/application/Layer.h"
 #include "Poseidon/core/events/EventDispatcher.h"
 #include "Poseidon/core/events/EventHandler.h"
-#include "Poseidon/core/events/KeyEvent.h"
+#include "Poseidon/core/events/KeyEvents.h"
 #include "Poseidon/core/window/Window.h"
 
 #include <filesystem>
@@ -11,7 +11,7 @@
 #include <vector>
 
 namespace poseidon {
-    class Application : public EventHandler {
+    class Application : public KeyEventHandler {
     public:
         Application(uint32_t windowWidth, uint32_t windowHeight, std::string windowTitle, const std::string& assetsBasePath);
         virtual ~Application() = default;
@@ -19,10 +19,11 @@ namespace poseidon {
         void start();
         void addLayer(Layer* layer);
 
-        void handleEvent(Event* event) override;
+        void handleEvent(const KeyEvent& event) override;
 
         [[nodiscard]] const Window& getWindow() const;
         [[nodiscard]] std::filesystem::path getAssetsBasePath() const;
+        [[nodiscard]] EventDispatcher& getEventDispatcher();
         [[noreturn]] void run();
 
     protected:
@@ -35,9 +36,6 @@ namespace poseidon {
         bool m_running = true;
 
         std::filesystem::path m_assetsBasePath;
-
-    private:
-        void handleKeyEvent(KeyEvent* event);
     };
 
     extern Application *createApplication(int argc, char **argv);

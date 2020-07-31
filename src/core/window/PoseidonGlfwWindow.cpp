@@ -1,4 +1,6 @@
-#include "Poseidon/core/events/KeyEvent.h"
+#include "Poseidon/core/events/KeyEvents.h"
+#include "Poseidon/core/events/MouseEvents.h"
+#include "Poseidon/core/events/WindowEvents.h"
 #include "Poseidon/core/logging/Logger.h"
 #include "Poseidon/core/window/PoseidonGlfwWindow.h"
 
@@ -34,6 +36,26 @@ void poseidon::PoseidonGlfwWindow::initializeWindow() {
         appWindow->keyCallback(window, key, scanCode, action, mods);
     });
 
+    glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, double xPos, double yPos) {
+        auto appWindow = static_cast<PoseidonGlfwWindow*>(glfwGetWindowUserPointer(window));
+        appWindow->cursorPositionCallback(window, xPos, yPos);
+    });
+
+    glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int button, int action, int mods) {
+        auto appWindow = static_cast<PoseidonGlfwWindow*>(glfwGetWindowUserPointer(window));
+        appWindow->mouseButtonCallback(window, button, action, mods);
+    });
+
+    glfwSetScrollCallback(m_window, [](GLFWwindow* window, double xOffset, double yOffset) {
+        auto appWindow = static_cast<PoseidonGlfwWindow*>(glfwGetWindowUserPointer(window));
+        appWindow->scrollCallback(window, xOffset, yOffset);
+    });
+
+    glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height) {
+        auto appWindow = static_cast<PoseidonGlfwWindow*>(glfwGetWindowUserPointer(window));
+        appWindow->resizeCallback(window, width, height);
+    });
+
     glfwMakeContextCurrent(m_window);
     glbinding::initialize(glfwGetProcAddress);
 
@@ -50,18 +72,58 @@ void poseidon::PoseidonGlfwWindow::onUpdate(std::chrono::milliseconds timeDelta)
     glfwSwapBuffers(m_window);
 }
 
-void poseidon::PoseidonGlfwWindow::keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+void poseidon::PoseidonGlfwWindow::keyCallback(GLFWwindow *window, int key, int scanCode, int action, int mods) {
     auto eventData = KeyEventData {
         .key = key,
-        .scanCode = scancode,
-        .action = convertAction(action)
+        .scanCode = scanCode,
+        .action = convertKeyAction(action)
     };
 
     auto event = std::make_unique<KeyEvent>(eventData);
     m_eventDispatcher->dispatchEvent(std::move(event));
 }
 
-poseidon::KeyAction poseidon::PoseidonGlfwWindow::convertAction(int glfwAction) {
+void poseidon::PoseidonGlfwWindow::cursorPositionCallback(GLFWwindow *window, double xPos, double yPos) {
+    auto eventData = MouseMovedData {
+        .xPosition = xPos,
+        .yPosition = yPos
+    };
+
+    auto event = std::make_unique<MouseMovedEvent>(eventData);
+    m_eventDispatcher->dispatchEvent(std::move(event));
+}
+
+void poseidon::PoseidonGlfwWindow::mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
+    auto eventData = MouseButtonEventData {
+        .action = convertMouseButtonAction(action),
+        .button = convertMouseButton(button)
+    };
+
+    auto event = std::make_unique<MouseButtonEvent>(eventData);
+    m_eventDispatcher->dispatchEvent(std::move(event));
+}
+
+void poseidon::PoseidonGlfwWindow::scrollCallback(GLFWwindow *window, double xOffset, double yOffset) {
+    auto eventData = MouseScrolledData {
+        .xOffset = xOffset,
+        .yOffset = yOffset
+    };
+
+    auto event = std::make_unique<MouseScrolledEvent>(eventData);
+    m_eventDispatcher->dispatchEvent(std::move(event));
+}
+
+void poseidon::PoseidonGlfwWindow::resizeCallback(GLFWwindow *window, int width, int height) {
+    auto eventData = WindowResizedEventData {
+        .width = width,
+        .height = height
+    };
+
+    auto event = std::make_unique<WindowResizedEvent>(eventData);
+    m_eventDispatcher->dispatchEvent(std::move(event));
+}
+
+poseidon::KeyAction poseidon::PoseidonGlfwWindow::convertKeyAction(int glfwAction) {
     if (glfwAction == GLFW_PRESS)
         return KeyAction::Press;
 
@@ -69,6 +131,26 @@ poseidon::KeyAction poseidon::PoseidonGlfwWindow::convertAction(int glfwAction) 
         return KeyAction::Release;
 
     return KeyAction::Repeat;
+}
+
+poseidon::MouseButton poseidon::PoseidonGlfwWindow::convertMouseButton(int glfwMouseButton) {
+    if (glfwMouseButton == GLFW_MOUSE_BUTTON_LEFT)
+        return MouseButton::Left;
+
+    if (glfwMouseButton == GLFW_MOUSE_BUTTON_RIGHT)
+        return MouseButton::Right;
+
+    if (glfwMouseButton == GLFW_MOUSE_BUTTON_MIDDLE)
+        return MouseButton::Middle;
+
+    return MouseButton::Left;
+}
+
+poseidon::MouseButtonAction poseidon::PoseidonGlfwWindow::convertMouseButtonAction(int glfwAction) {
+    if (glfwAction == GLFW_PRESS)
+        return MouseButtonAction::Clicked;
+
+    else return MouseButtonAction::Released;
 }
 
 std::any poseidon::PoseidonGlfwWindow::getNativeHandle() const {
