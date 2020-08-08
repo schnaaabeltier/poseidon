@@ -1,5 +1,12 @@
 #pragma once
 
+#include "Poseidon/rendering/Shader.h"
+#include "Poseidon/rendering/ShaderFactory.h"
+#include "Poseidon/rendering/ShaderProgram.h"
+#include "Poseidon/rendering/platform/opengl/OpenGLShader.h"
+#include "Poseidon/rendering/platform/opengl/OpenGLShaderProgram.h"
+
+
 #include "Poseidon/core/application/Application.h"
 #include "Poseidon/core/application/Entrypoint.h"
 #include "Poseidon/core/application/Layer.h"
