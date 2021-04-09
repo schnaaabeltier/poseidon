@@ -21,6 +21,7 @@ add_subdirectory(src)
 set(install_targets
         core
         gui
+        rendering
         )
 
 install(TARGETS
