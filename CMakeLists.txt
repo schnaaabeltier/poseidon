@@ -9,6 +9,7 @@ include(cmake/CompileOptions.cmake)
 
 find_package(glbinding REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(GLEW REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(imgui REQUIRED)
 

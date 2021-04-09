@@ -15,7 +15,7 @@ void poseidon::Application::start() {
     run();
 }
 
-[[noreturn]] void poseidon::Application::run() {
+void poseidon::Application::run() {
     auto currentFrameTime = std::chrono::system_clock::now();
     auto timeDelta = std::chrono::duration_cast<std::chrono::milliseconds>(currentFrameTime - m_lastFrameTime);
 

@@ -24,7 +24,7 @@ namespace poseidon {
         [[nodiscard]] const Window& getWindow() const;
         [[nodiscard]] std::filesystem::path getAssetsBasePath() const;
         [[nodiscard]] EventDispatcher& getEventDispatcher();
-        [[noreturn]] void run();
+        void run();
 
     protected:
         std::unique_ptr<Window> m_window;

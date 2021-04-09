@@ -1,8 +1,7 @@
 #include "Poseidon/core/application/Application.h"
 #include "Poseidon/core/logging/Logger.h"
 #include "Poseidon/gui/ImGuiLayer.h"
-#include "Poseidon/gui/glfw/ImGuiGLFWBinding.h"
-#include "Poseidon/gui/glfw/ImGuiOpenGL3Binding.h"
+#include "Poseidon/gui/glfw/ImGuiImpl.h"
 
 #include <glbinding/gl/gl.h>
 
@@ -21,7 +20,7 @@ void poseidon::ImGuiLayer::onAttach(Application& app) {
     app.getEventDispatcher().addEventHandler<WindowResizedEvent>(static_cast<WindowResizedEventHandler*>(this));
 
     auto window = std::any_cast<GLFWwindow*>(app.getWindow().getNativeHandle());
-    assert(("Window was retrieved successfully.", window != nullptr));
+    assert(window != nullptr);
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();

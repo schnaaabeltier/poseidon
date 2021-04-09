@@ -9,8 +9,8 @@ namespace poseidon {
     class ShaderFactory {
     public:
         template<ShaderType Type>
-        static auto createShader(std::filesystem::path shaderPath) -> std::shared_ptr<Shader<Type>> {
-            std::string shaderSource = Shader::readSourceFromFile(shaderPath);
+        static auto createShader(const std::filesystem::path& shaderPath) -> std::shared_ptr<Shader<Type>> {
+            std::string shaderSource = Shader<Type>::readSourceFromFile(shaderPath);
             return std::make_shared<OpenGLShader<Type>>(shaderSource);
         }
     };

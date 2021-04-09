@@ -5,8 +5,8 @@ set(sources
 
         ImGuiLayer.cpp
 
-        glfw/ImGuiGLFWBinding.cpp
-        glfw/ImGuiOpenGL3Binding.cpp
+        glfw/ImGuiImplGLFW.cpp
+        glfw/ImGuiImplOpenGL3.cpp
         )
 
 
@@ -16,4 +16,4 @@ target_include_directories(${target} PRIVATE
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>)
 
-target_link_libraries(${target} glfw glbinding::glbinding spdlog::spdlog imgui::imgui)
+target_link_libraries(${target} core glfw glbinding::glbinding spdlog::spdlog imgui::imgui)

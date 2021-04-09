@@ -6,6 +6,7 @@ set(sources
         platform/opengl/OpenGLShaderProgram.cpp
 
         RenderCommand.cpp
+        RenderLayer.cpp
         ShaderProgram.cpp
         )
 
