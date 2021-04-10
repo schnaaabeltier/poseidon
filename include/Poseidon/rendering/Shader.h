@@ -21,6 +21,8 @@ namespace poseidon {
 
         };
 
+        virtual ~Shader() = default;
+
         virtual auto load(std::string source) -> void = 0;
         virtual auto compile() -> void = 0;
         virtual auto use() -> void = 0;

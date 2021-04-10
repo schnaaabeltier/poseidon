@@ -9,6 +9,8 @@ void poseidon::Logger::initialize() {
     spdlog::set_pattern("%^[%T][%-6l] %n : %v%$");
     m_coreLogger = spdlog::stdout_color_mt("Core");
     m_clientLogger = spdlog::stdout_color_mt("App");
+    m_coreLogger->set_level(spdlog::level::debug);
+    m_clientLogger->set_level(spdlog::level::debug);
 }
 
 void poseidon::Logger::setClientLogger(std::shared_ptr<spdlog::logger> logger) {

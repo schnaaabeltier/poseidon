@@ -11,7 +11,6 @@ poseidon::ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {
 
 }
 
-
 void poseidon::ImGuiLayer::onAttach(Application& app) {
     app.getEventDispatcher().addEventHandler<KeyEvent>(static_cast<KeyEventHandler*>(this));
     app.getEventDispatcher().addEventHandler<MouseButtonEvent>(static_cast<MouseButtonEventHandler*>(this));
@@ -40,7 +39,27 @@ void poseidon::ImGuiLayer::onUpdate(std::chrono::milliseconds timeDelta) {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
-    ImGui::ShowDemoWindow();
+
+    long fps = 1000 / double(timeDelta.count());
+    auto fpsString = fmt::format("FPS {}", fps);
+    //PS_CORE_DEBUG(fpsString);
+    auto textSize = ImGui::CalcTextSize(fpsString.c_str());
+    auto windowSize = ImVec2(textSize.x + 20, textSize.y);
+
+    auto pos = ImVec2(ImGui::GetIO().DisplaySize.x - windowSize.x, 0);
+    ImGui::SetNextWindowPos(pos);
+    ImGui::SetNextWindowSize(windowSize);
+
+    ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar |
+            ImGuiWindowFlags_NoMove |
+            ImGuiWindowFlags_NoScrollbar |
+            ImGuiWindowFlags_NoSavedSettings |
+            ImGuiWindowFlags_NoDecoration |
+            ImGuiWindowFlags_NoInputs;
+    //ImGui::Begin("fps", nullptr, flags);
+    //ImGui::Text("%s", fpsString.c_str());
+    //ImGui::End();
+
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }

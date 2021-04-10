@@ -16,6 +16,7 @@ find_package(imgui REQUIRED)
 set(include_dir include)
 file(GLOB_RECURSE headers ${include_dir}/*.h)
 
+add_subdirectory(sandbox)
 add_subdirectory(src)
 
 set(install_targets

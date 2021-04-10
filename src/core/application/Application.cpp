@@ -16,10 +16,9 @@ void poseidon::Application::start() {
 }
 
 void poseidon::Application::run() {
-    auto currentFrameTime = std::chrono::system_clock::now();
-    auto timeDelta = std::chrono::duration_cast<std::chrono::milliseconds>(currentFrameTime - m_lastFrameTime);
-
     while(m_running) {
+        auto currentFrameTime = std::chrono::system_clock::now();
+        auto timeDelta = std::chrono::duration_cast<std::chrono::milliseconds>(currentFrameTime - m_lastFrameTime);
         m_eventDispatcher.handleEvents();
 
         for (auto &layer : m_layers) {
@@ -28,9 +27,8 @@ void poseidon::Application::run() {
 
         m_window->onUpdate(timeDelta);
         m_running = m_window->isVisible();
+        m_lastFrameTime = currentFrameTime;
     }
-
-    m_lastFrameTime = currentFrameTime;
 }
 
 void poseidon::Application::addLayer(Layer *layer) {

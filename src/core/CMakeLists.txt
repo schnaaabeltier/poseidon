@@ -23,7 +23,7 @@ set(sources
 
 add_library(${target} ${sources})
 target_compile_options(${target} PRIVATE ${default_compile_options})
-target_include_directories(${target} PRIVATE
+target_include_directories(${target} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>)
 

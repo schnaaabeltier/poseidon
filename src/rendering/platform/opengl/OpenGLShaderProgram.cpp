@@ -40,3 +40,7 @@ auto poseidon::OpenGLShaderProgram::link() -> void {
 std::any poseidon::OpenGLShaderProgram::getHandle() {
     return m_programId;
 }
+
+auto poseidon::OpenGLShaderProgram::use() -> void {
+    gl::glUseProgram(m_programId);
+}

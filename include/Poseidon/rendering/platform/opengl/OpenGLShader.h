@@ -13,10 +13,15 @@ namespace poseidon {
 
         };
 
+        ~OpenGLShader() override {
+            gl::glDeleteShader(m_shaderId);
+        }
+
         auto load(std::string source) -> void override {
             m_shaderId = gl::glCreateShader(convertShaderType<Type>());
 
             auto shaderSource = source.c_str();
+
             gl::glShaderSource(m_shaderId, 1, &shaderSource, nullptr);
         };
 
@@ -34,6 +39,10 @@ namespace poseidon {
 
         auto getHandle() -> std::any override {
             return m_shaderId;
+        }
+
+        auto use() -> void override {
+
         }
 
         template<ShaderType PoseidonShaderType>
