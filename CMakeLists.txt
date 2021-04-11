@@ -7,15 +7,10 @@ set(${library_name}_version 1.0)
 
 include(cmake/CompileOptions.cmake)
 
-find_package(glbinding REQUIRED)
-find_package(glfw3 REQUIRED)
-find_package(GLEW REQUIRED)
-find_package(spdlog REQUIRED)
-find_package(imgui REQUIRED)
-
 set(include_dir include)
 file(GLOB_RECURSE headers ${include_dir}/*.h)
 
+add_subdirectory(libs)
 add_subdirectory(sandbox)
 add_subdirectory(src)
 
@@ -23,6 +18,10 @@ set(install_targets
         core
         gui
         rendering
+
+        glfw
+        imgui
+        spdlog
         )
 
 install(TARGETS
