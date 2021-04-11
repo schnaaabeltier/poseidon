@@ -8,6 +8,8 @@
 namespace poseidon {
     class ShaderProgram {
     public:
+        virtual ~ShaderProgram() = default;
+
         auto setFragmentShader(std::shared_ptr<Shader<ShaderType::Fragment>> shader) -> void;
         auto setVertexShader(std::shared_ptr<Shader<ShaderType::Vertex>> shader) -> void;
         auto setComputeShader(std::shared_ptr<Shader<ShaderType::Compute>> shader) -> void;

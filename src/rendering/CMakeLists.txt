@@ -3,7 +3,10 @@ set(target rendering)
 set(sources
         ${headers}
 
+        data/VertexBuffer.cpp
+
         platform/opengl/OpenGLShaderProgram.cpp
+        platform/opengl/OpenGLVertexBuffer.cpp
 
         RenderCommand.cpp
         RenderLayer.cpp

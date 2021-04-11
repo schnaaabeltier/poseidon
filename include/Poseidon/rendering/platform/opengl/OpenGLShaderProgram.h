@@ -1,4 +1,4 @@
-
+#pragma once
 
 #include "Poseidon/rendering/ShaderProgram.h"
 
@@ -8,6 +8,7 @@ namespace poseidon {
     class OpenGLShaderProgram : public ShaderProgram {
     public:
         OpenGLShaderProgram();
+        ~OpenGLShaderProgram() override;
 
         auto use() -> void override;
         auto link() -> void override;

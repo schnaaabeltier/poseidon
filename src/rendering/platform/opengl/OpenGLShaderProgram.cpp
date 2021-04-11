@@ -6,6 +6,10 @@ poseidon::OpenGLShaderProgram::OpenGLShaderProgram() {
 
 }
 
+poseidon::OpenGLShaderProgram::~OpenGLShaderProgram() {
+
+}
+
 auto poseidon::OpenGLShaderProgram::link() -> void {
     auto vertexShader = getVertexShader();
     auto fragmentShader = getFragmentShader();

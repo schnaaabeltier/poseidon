@@ -2,10 +2,13 @@
 
 #include "Poseidon/core/logging/Logger.h"
 
-#include "Poseidon/rendering/platform/opengl/OpenGLShaderProgram.h"
 #include "Poseidon/rendering/ShaderFactory.h"
+#include "Poseidon/rendering/data/VertexBuffer.h"
+#include "Poseidon/rendering/platform/opengl/OpenGLVertexBuffer.h"
 
 #include "glbinding/gl/gl.h"
+
+using namespace poseidon;
 
 TestRenderLayer::TestRenderLayer() : poseidon::RenderLayer("TestRenderLayer") {
 
@@ -18,14 +21,13 @@ void TestRenderLayer::onRender(std::chrono::microseconds timeDelta) {
             0.0f,  0.5f, 0.0f
     };
 
+    auto vertexBuffer = VertexBufferFactory::createVertexBuffer();
+    vertexBuffer->setData(vertices, sizeof(vertices), Static);
+
     unsigned int vertexArray;
     gl::glGenVertexArrays(1, &vertexArray);
     gl::glBindVertexArray(vertexArray);
 
-    unsigned int vertexBuffer;
-    gl::glGenBuffers(1, &vertexBuffer);
-    gl::glBindBuffer(gl::GLenum::GL_ARRAY_BUFFER, vertexBuffer);
-    gl::glBufferData(gl::GLenum::GL_ARRAY_BUFFER, sizeof(vertices), vertices, gl::GLenum::GL_STATIC_DRAW);
     gl::glVertexAttribPointer(0, 3, gl::GL_FLOAT, gl::GL_FALSE, 3 * sizeof(float), (void*)0);
     gl::glEnableVertexAttribArray(0);
 
@@ -37,11 +39,11 @@ void TestRenderLayer::onRender(std::chrono::microseconds timeDelta) {
     auto fragmentShader = poseidon::ShaderFactory::createShader<poseidon::ShaderType::Fragment>("FragmentShader", fragmentShaderPath);
     fragmentShader->compile();
 
-    auto shaderProgram = poseidon::OpenGLShaderProgram();
-    shaderProgram.setVertexShader(vertexShader);
-    shaderProgram.setFragmentShader(fragmentShader);
-    shaderProgram.link();
-    shaderProgram.use();
+    auto shaderProgram = poseidon::ShaderFactory::createShaderProgram();
+    shaderProgram->setVertexShader(vertexShader);
+    shaderProgram->setFragmentShader(fragmentShader);
+    shaderProgram->link();
+    shaderProgram->use();
 
     gl::glDrawArrays(gl::GLenum::GL_TRIANGLES, 0, 3);
 }
