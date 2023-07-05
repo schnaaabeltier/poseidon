@@ -31,11 +31,11 @@ void TestRenderLayer::onRender(std::chrono::microseconds timeDelta) {
     gl::glVertexAttribPointer(0, 3, gl::GL_FLOAT, gl::GL_FALSE, 3 * sizeof(float), (void*)0);
     gl::glEnableVertexAttribArray(0);
 
-    auto shaderPath = "/home/jakob/projects/poseidon/sandbox/assets/test.vert";
+    auto shaderPath = "/home/sofia/projects/poseidon/sandbox/assets/test.vert";
     auto vertexShader = poseidon::ShaderFactory::createShader<poseidon::ShaderType::Vertex>("VertexShader", shaderPath);
     vertexShader->compile();
 
-    auto fragmentShaderPath = "/home/jakob/projects/poseidon/sandbox/assets/test.vert";
+    auto fragmentShaderPath = "/home/sofia/projects/poseidon/sandbox/assets/test.vert";
     auto fragmentShader = poseidon::ShaderFactory::createShader<poseidon::ShaderType::Fragment>("FragmentShader", fragmentShaderPath);
     fragmentShader->compile();
 

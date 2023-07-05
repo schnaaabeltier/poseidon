@@ -34,4 +34,5 @@ gl::GLenum poseidon::OpenGLVertexBuffer::vertexBufferModeToGlMode(VertexBufferMo
         case VertexBufferMode::Dynamic:
             return gl::GL_DYNAMIC_DRAW;
     }
+    return gl::GL_STATIC_DRAW;
 }

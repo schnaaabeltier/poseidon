@@ -33,7 +33,7 @@ namespace poseidon {
             if (!success) {
                 auto errorBuffer = std::array<char, 1024>();
                 gl::glGetShaderInfoLog(m_shaderId, 1024, nullptr, errorBuffer.data());
-                PS_CORE_ERROR("Failed to compile shader: {}", std::string(errorBuffer.data()));
+                PS_CORE_ERROR("Failed to compile shader {}: {}", this->getName(), std::string(errorBuffer.data()));
             }
         };
 

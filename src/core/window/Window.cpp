@@ -3,7 +3,7 @@
 #include <utility>
 
 poseidon::Window::Window(uint32_t width, uint32_t height, std::string title, EventDispatcher* eventDispatcher)
-    : m_width(width), m_height(height), m_title(std::move(title)), m_eventDispatcher(eventDispatcher) {
+    : m_eventDispatcher(eventDispatcher), m_width(width), m_height(height), m_title(std::move(title)) {
 
 }
 
