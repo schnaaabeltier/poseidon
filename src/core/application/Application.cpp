@@ -6,8 +6,6 @@
 poseidon::Application::Application(uint32_t windowWidth, uint32_t windowHeight, std::string windowTitle, const std::string& assetsBasePath) {
     m_assetsBasePath = std::filesystem::path(assetsBasePath);
     m_window = std::make_unique<PoseidonGlfwWindow>(windowWidth, windowHeight, std::move(windowTitle), &m_eventDispatcher);
-    auto imguiLayer = new poseidon::ImGuiLayer();
-    addLayer(imguiLayer);
 }
 
 void poseidon::Application::start() {

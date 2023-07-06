@@ -4,7 +4,6 @@ set(sources
         ${headers}
 
         application/Application.cpp
-        application/Entrypoint.cpp
         application/Layer.cpp
 
         events/Event.cpp

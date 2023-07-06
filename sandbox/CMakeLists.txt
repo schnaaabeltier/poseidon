@@ -4,4 +4,4 @@ add_executable(sandbox
         src/TestRenderLayer.h
         src/TestRenderLayer.cpp)
 
-target_link_libraries(sandbox core gui rendering)
+target_link_libraries(sandbox core gui rendering entrypoint)
