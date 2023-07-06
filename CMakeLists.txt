@@ -5,6 +5,11 @@ set(CMAKE_CXX_STANDARD 20)
 set(library_name Poseidon)
 set(${library_name}_version 1.0)
 
+if (WIN32)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+endif ()
+
 include(cmake/CompileOptions.cmake)
 
 set(include_dir include)
