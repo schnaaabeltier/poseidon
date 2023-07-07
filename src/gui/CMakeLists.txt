@@ -16,4 +16,4 @@ target_include_directories(${target} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>)
 
-target_link_libraries(${target} PUBLIC core glfw glbinding::glbinding spdlog::spdlog imgui)
+target_link_libraries(${target} PUBLIC core glfw glbinding::glbinding spdlog::spdlog imgui::imgui)

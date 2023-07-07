@@ -80,7 +80,7 @@ void poseidon::ImGuiLayer::handleEvent(const poseidon::MouseMovedEvent& event) {
 }
 
 void poseidon::ImGuiLayer::handleEvent(const poseidon::MouseButtonEvent& event) {
-    PS_CORE_INFO("Mouse button event: {}, {}", event.getData<MouseButtonEventData>().button, event.getData<MouseButtonEventData>().action);
+    PS_CORE_INFO("Mouse button event: {}, {}", static_cast<int>(event.getData<MouseButtonEventData>().button), static_cast<int>(event.getData<MouseButtonEventData>().action));
 }
 
 void poseidon::ImGuiLayer::handleEvent(const poseidon::MouseScrolledEvent& event) {
