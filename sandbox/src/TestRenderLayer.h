@@ -6,5 +6,5 @@ class TestRenderLayer : public poseidon::RenderLayer {
 public:
     TestRenderLayer();
 
-    auto onRender(std::chrono::microseconds timeDelta) -> void override;
+    auto onRender(poseidon::RenderingContext renderingContext) -> void override;
 };

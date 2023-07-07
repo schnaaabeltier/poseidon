@@ -14,7 +14,7 @@ namespace poseidon {
         ~ImGuiLayer() override = default;
 
         void onAttach(Application& app) override;
-        void onUpdate(std::chrono::milliseconds timeDelta) override;
+        void onUpdate(RenderingContext renderingContext) override;
         void onDetach() override;
 
         void handleEvent(const KeyEvent &event) override;

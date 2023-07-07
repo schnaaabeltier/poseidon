@@ -23,8 +23,8 @@ void poseidon::ImGuiLayer::onAttach(Application& app) {
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    std::filesystem::path fontFilePath = app.getAssetsBasePath() / "fonts" / "OpenSans-Regular.ttf";
+    ImGuiIO& io = ImGui::GetIO();
+    std::filesystem::path fontFilePath = app.getAssetManager().getAssetPath("fonts/OpenSans-Regular.ttf");
     PS_CORE_INFO("Adding font file {}", fontFilePath.string());
     io.Fonts->AddFontFromFileTTF(fontFilePath.string().c_str(), 20);
     ImGui::StyleColorsDark();
@@ -33,14 +33,14 @@ void poseidon::ImGuiLayer::onAttach(Application& app) {
     ImGui::StyleColorsDark();
 }
 
-void poseidon::ImGuiLayer::onUpdate(std::chrono::milliseconds timeDelta) {
+void poseidon::ImGuiLayer::onUpdate(RenderingContext renderingContext) {
     gl::glClearColor(0, 0, 0, 1);
     gl::glClear(gl::ClearBufferMask::GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    long fps = 1000 / double(timeDelta.count());
+    long fps = 1000 / double(renderingContext.timeDelta.count());
     auto fpsString = fmt::format("FPS {}", fps);
     //PS_CORE_DEBUG(fpsString);
     auto textSize = ImGui::CalcTextSize(fpsString.c_str());
@@ -56,9 +56,9 @@ void poseidon::ImGuiLayer::onUpdate(std::chrono::milliseconds timeDelta) {
             ImGuiWindowFlags_NoSavedSettings |
             ImGuiWindowFlags_NoDecoration |
             ImGuiWindowFlags_NoInputs;
-    //ImGui::Begin("fps", nullptr, flags);
-    //ImGui::Text("%s", fpsString.c_str());
-    //ImGui::End();
+    ImGui::Begin("fps", nullptr, flags);
+    ImGui::Text("%s", fpsString.c_str());
+    ImGui::End();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -4,8 +4,8 @@
 #include "Poseidon/gui/ImGuiLayer.h"
 
 poseidon::Application::Application(uint32_t windowWidth, uint32_t windowHeight, std::string windowTitle, const std::string& assetsBasePath) {
-    m_assetsBasePath = std::filesystem::path(assetsBasePath);
     m_window = std::make_unique<PoseidonGlfwWindow>(windowWidth, windowHeight, std::move(windowTitle), &m_eventDispatcher);
+    m_assetManager = std::make_unique<AssetManager>(assetsBasePath);
 }
 
 void poseidon::Application::start() {
@@ -20,7 +20,10 @@ void poseidon::Application::run() {
         m_eventDispatcher.handleEvents();
 
         for (auto &layer : m_layers) {
-            layer->onUpdate(timeDelta);
+            layer->onUpdate(RenderingContext {
+                .timeDelta = timeDelta,
+                .assetManager = *m_assetManager,
+            });
         }
 
         m_window->onUpdate(timeDelta);
@@ -42,8 +45,9 @@ const poseidon::Window& poseidon::Application::getWindow() const {
     return *m_window;
 }
 
-std::filesystem::path poseidon::Application::getAssetsBasePath() const {
-    return m_assetsBasePath;
+poseidon::AssetManager& poseidon::Application::getAssetManager() const
+{
+    return *m_assetManager;
 }
 
 poseidon::EventDispatcher& poseidon::Application::getEventDispatcher() {

@@ -25,6 +25,11 @@ gl::GLuint poseidon::OpenGLVertexBuffer::getId() const
     return m_bufferId;
 }
 
+auto poseidon::OpenGLVertexBuffer::bind() -> void
+{
+    gl::glBindBuffer(gl::GLenum::GL_ARRAY_BUFFER, m_bufferId);
+}
+
 gl::GLenum poseidon::OpenGLVertexBuffer::vertexBufferModeToGlMode(VertexBufferMode mode)
 {
     switch (mode)

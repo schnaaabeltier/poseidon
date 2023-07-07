@@ -19,6 +19,7 @@ namespace poseidon
         virtual void setData(void* data, std::size_t size, VertexBufferMode mode) = 0;
         virtual void* map() = 0;
         virtual void unmap() = 0;
+        virtual void bind() = 0;
     };
 
     class VertexBufferFactory

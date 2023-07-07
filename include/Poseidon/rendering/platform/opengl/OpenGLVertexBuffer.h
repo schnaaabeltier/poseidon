@@ -11,12 +11,13 @@ namespace poseidon
     public:
         explicit OpenGLVertexBuffer();
 
-        [[nodiscard]] gl::GLuint getId() const;
+        [[nodiscard]] auto getId() const -> gl::GLuint;
 
     private:
-        void setData(void *data, std::size_t size, VertexBufferMode mode) override;
-        void *map() override;
-        void unmap() override;
+        auto setData(void *data, std::size_t size, VertexBufferMode mode) -> void override;
+        auto map() -> void* override;
+        auto unmap() -> void override;
+        auto bind() -> void override;
 
         static gl::GLenum vertexBufferModeToGlMode(VertexBufferMode mode);
 

@@ -8,8 +8,8 @@ auto poseidon::RenderLayer::onAttach(poseidon::Application &app) -> void {
 
 }
 
-auto poseidon::RenderLayer::onUpdate(std::chrono::milliseconds timeDelta) -> void {
-    onRender(timeDelta);
+auto poseidon::RenderLayer::onUpdate(RenderingContext renderingContext) -> void {
+    onRender(renderingContext);
 }
 
 auto poseidon::RenderLayer::onDetach() -> void {

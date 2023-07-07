@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <string>
+#include "RenderingContext.h"
 
 namespace poseidon {
     class Application;
@@ -12,7 +13,7 @@ namespace poseidon {
         virtual ~Layer() = default;
 
         virtual void onAttach(Application& app) = 0;
-        virtual void onUpdate(std::chrono::milliseconds timeDelta) = 0;
+        virtual void onUpdate(RenderingContext context) = 0;
         virtual void onDetach() = 0;
 
     private:

@@ -10,9 +10,9 @@ namespace poseidon
         explicit RenderLayer(std::string name);
 
         auto onAttach(Application &app) -> void override;
-        auto onUpdate(std::chrono::milliseconds timeDelta) -> void override;
+        auto onUpdate(RenderingContext renderingContext) -> void override;
         auto onDetach() -> void override;
 
-        virtual auto onRender(std::chrono::microseconds timeDelta) -> void = 0;
+        virtual auto onRender(RenderingContext renderingContext) -> void = 0;
     };
 }

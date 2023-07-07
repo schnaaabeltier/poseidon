@@ -6,6 +6,8 @@ set(sources
         application/Application.cpp
         application/Layer.cpp
 
+        assets/AssetManager.cpp
+
         events/Event.cpp
         events/EventDispatcher.cpp
         events/EventHandler.cpp

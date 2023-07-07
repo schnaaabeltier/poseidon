@@ -5,6 +5,7 @@
 #include "Poseidon/core/events/EventHandler.h"
 #include "Poseidon/core/events/KeyEvents.h"
 #include "Poseidon/core/window/Window.h"
+#include "Poseidon/core/assets/AssetManager.h"
 
 #include <filesystem>
 #include <memory>
@@ -22,7 +23,7 @@ namespace poseidon {
         void handleEvent(const KeyEvent& event) override;
 
         [[nodiscard]] const Window& getWindow() const;
-        [[nodiscard]] std::filesystem::path getAssetsBasePath() const;
+        [[nodiscard]] AssetManager& getAssetManager() const;
         [[nodiscard]] EventDispatcher& getEventDispatcher();
         void run();
 
@@ -35,7 +36,7 @@ namespace poseidon {
 
         bool m_running = true;
 
-        std::filesystem::path m_assetsBasePath;
+        std::unique_ptr<AssetManager> m_assetManager;
     };
 
     extern Application *createApplication(int argc, char **argv);
